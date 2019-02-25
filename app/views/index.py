@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, jsonify
+
 bp = Blueprint('base', __name__)
 
 from ..models import *
@@ -8,5 +9,6 @@ def home():
     row = Users(username='alex')
     db.session.add(row)
     db.session.commit()
-    Users.query.all()
-    return render_template('index.html')
+    users = [{'username':r.username} for r in Users.query.all()]
+    return jsonify(users)
+
